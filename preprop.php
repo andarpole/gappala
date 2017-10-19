@@ -8,7 +8,7 @@
   </head>
   <body>
     <?php
-        $link = mysqli_connect('localhost','root','','sentipol2' );
+        $link = mysqli_connect('localhost','root','root','sentipol2' );
         if($link)
         {
         }
