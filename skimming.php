@@ -9,6 +9,8 @@
         }
     ?>
 
+    <p>Halooo semuanya </p>
+
     <form action="/skimming.php" method="post">
         Masukkan kata:<br>
         <input type="text" name="kata"><br>
