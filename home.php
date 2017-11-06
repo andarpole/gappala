@@ -34,9 +34,9 @@
           <tbody >
             <?php
               $result = mysqli_query($link, "SELECT * FROM komentar");
-              for ($i=1; $i < 15 ; $i++)
-              {
-                $row=mysqli_fetch_row($result);
+              for ($i=0; $i < 25; $i++) {
+                # code...
+                $row = mysqli_fetch_row($result)
             ?>
                 <tr>
                   <td><?php echo "$row[0]"; ?></td>

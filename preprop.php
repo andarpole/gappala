@@ -23,18 +23,20 @@
         $insPrep = "INSERT INTO preprocessing (id_komentar, komen_casefold) VALUES";
         $query_parts = array();
 
-        for ($i = 1; $i < 15 ; $i++) {
+        //casefolding
+        for ($i = 1; $i < 25 ; $i++) {
           $row=mysqli_fetch_row($result);
-          $query_parts[] = "('" . $row[0]."', '" . strtolower($row[3]) . "')";
+          $query_parts[] = "('" . $row[0]."', '" . strtolower($row[3]). "')";
+
         }
         $insPrep .= implode(', ', $query_parts);
 
         if(mysqli_query($link, $insPrep)){
-              echo "Records added successfully.";
+          echo "Records added successfully.";
         }
         else
         {
-              echo "ERROR: Could not able to execute $insPrep. " . mysqli_error($link);
+          echo "ERROR: Could not able to execute $insPrep. " . mysqli_error($link);
         }
     ?>
 
@@ -54,7 +56,7 @@
           <tbody >
             <?php
               $result = mysqli_query($link, "SELECT * FROM preprocessing");
-              for ($i=1; $i < 15 ; $i++)
+              for ($i=1; $i <= 25 ; $i++)
               {
                 $row=mysqli_fetch_row($result);
             ?>
@@ -68,7 +70,7 @@
           </tbody>
         </table>
 
-        <a href="preprop.php">next</a>
+        <a href="cleanse.php">next</a>
     </div>
     <!-- Op tional JavaScript -->
   </body>
