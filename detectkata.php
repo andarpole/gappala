@@ -44,13 +44,15 @@
           print_r($unique_words);
           echo "</pre>";
 
+          $tampung = $row[0];
+
           for ($i=0; $i < $panjang_array; $i++) {
             $cocok 	= mysqli_query($link,"SELECT word FROM dictionary WHERE word = '$unique_words[$i]'");
             $tampung	= mysqli_num_rows($cocok);
             if ($tampung == 0) { //nyari kata yang tidak baku
               $cocokin = mysqli_query($link,"SELECT kata_alay FROM tidakbaku WHERE kata_alay = '$unique_words[$i]'");
               $tampungin = mysqli_num_rows($cocokin);
-              // if ($tampungin == 0) { // nyari kata alay yg udah dimasukkin sblmnya
+              if ($tampungin == 0) { // cek apakah kata alay yg udah dimasukkin sblmnya
                 echo "<pre>";
                 echo "tidak baku\t:".$unique_words[$i];
                 echo "</pre>";
@@ -63,28 +65,31 @@
                 {
                   echo "ERROR: Could not able to execute $query. " . mysqli_error($link);
                 }
-              // }
-              // else {
+              }
+              else {
                 echo "<pre>";
                 echo "tidak baku\t:".$unique_words[$i]."\n";
                 echo "ID komentarnya:\t".$row[0]."\n";
                 echo "</pre>";
 
-                // echo $flag_id."\n";
+                //cara update flag_id_komentar sebagai kumpulan flag_id_komentar yg udah ditemuin sebelumnya?
+                $ambil = mysqli_query($link,"SELECT GROUP_CONCAT(flag_id_komentar SEPARATOR ' ') AS flag_id_komentar FROM tidakbaku WHERE kata_alay = '$unique_words[$i]' GROUP BY kata_alay");
+                $obj = mysqli_fetch_row($ambil);
 
-                // $query = "UPDATE tidakbaku SET flag_id_komentar = '$flag_id' WHERE kata_alay = '$unique_words[$i]'";
+                $flag_id = $obj[0]." ".$row[0];
+                $query = "UPDATE tidakbaku SET flag_id_komentar = '$flag_id' WHERE kata_alay = '$unique_words[$i]'";
 
-                // if(mysqli_query($link, $query)){
-                //   echo "Records ke update.";
-                // }
-                // else
-                // {
-                //   echo "ERROR: Could not able to execute $query. " . mysqli_error($link);
-                // }
-              // }
+                if(mysqli_query($link, $query)){
+                  echo "Records ke update.";
+                }
+                else
+                {
+                  echo "ERROR: Could not able to execute $query. " . mysqli_error($link);
+                }
+              }
             }
-            else {
-            }
+           else {
+           }
           }
 
         }
